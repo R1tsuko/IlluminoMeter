@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/objectSizeFilterContainer"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <AutoCompleteTextView
+            android:id="@+id/objectSizeFilterSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:maxLines="1"
+            android:paddingTop="10dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingBottom="10dp"
+            android:singleLine="true"
+            android:textAlignment="center"
+            tools:ignore="LabelFor"
+            tools:text="na" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Далее"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:checkedButton="@id/backgroundDark"
+        app:layout_constraintStart_toStartOf="@+id/objectSizeFilterContainer"
+        app:layout_constraintTop_toBottomOf="@+id/objectSizeFilterContainer">
+
+        <RadioButton
+            android:id="@+id/backgroundDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Темный" />
+
+        <RadioButton
+            android:id="@+id/backgroundMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Средний" />
+
+        <RadioButton
+            android:id="@+id/backgroundLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Светлый" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/contrast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:checkedButton="@id/contrastLow"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toBottomOf="@+id/background">
+
+        <RadioButton
+            android:id="@+id/contrastLow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Низкий" />
+
+        <RadioButton
+            android:id="@+id/contrastMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Средний" />
+
+        <RadioButton
+            android:id="@+id/contrastHigh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Высокий" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Выберите наименьший размер объекта различения"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите тип фона"
+        app:layout_constraintBottom_toTopOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/background" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите контраст фона с объектом"
+        app:layout_constraintBottom_toTopOf="@+id/contrast"
+        app:layout_constraintStart_toStartOf="@+id/contrast" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите тип освещения"
+        app:layout_constraintBottom_toTopOf="@+id/system"
+        app:layout_constraintStart_toStartOf="@+id/system" />
+
+    <RadioGroup
+        android:id="@+id/system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:checkedButton="@id/systemCommon"
+        app:layout_constraintStart_toStartOf="@+id/contrast"
+        app:layout_constraintTop_toBottomOf="@+id/contrast">
+
+        <RadioButton
+            android:id="@+id/systemCommon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Общее" />
+
+        <RadioButton
+            android:id="@+id/systemCombined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Комбинированное" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
