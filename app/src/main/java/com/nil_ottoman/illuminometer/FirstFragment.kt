@@ -60,6 +60,9 @@ class FirstFragment : Fragment() {
                     resources.getResourceEntryName(binding.system.checkedRadioButtonId)
                 )
         }
+        binding.buttonFirstBack.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_FirstFirstFragment)
+        }
     }
 
     override fun onDestroyView() {

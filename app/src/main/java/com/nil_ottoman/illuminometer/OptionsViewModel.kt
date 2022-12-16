@@ -8,6 +8,7 @@ open class OptionsViewModel : ViewModel() {
         MutableLiveData<Array<String>>()
     }
 
-    //private val originalList: LiveData<List<Item>>() = ...
-    //val filteredList: LiveData<List<Item>> = ...
+    val isNeededSecondFragment: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>(true)
+    }
 }

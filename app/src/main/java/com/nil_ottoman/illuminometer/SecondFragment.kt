@@ -52,12 +52,18 @@ class SecondFragment : Fragment(), SensorEventListener {
 
 
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            if(optionsViewModel.isNeededSecondFragment.value!!) {
+                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            } else {
+                findNavController().navigate(R.id.action_SecondFragment_to_FirstFirstFragment)
+            }
         }
 
 
         binding.buttonStart.setOnClickListener {
             it.isClickable = false
+            binding.buttonSecond.isClickable = false
+            binding.textView8.text = "Подождите, идет измерение..."
             sensorManager.registerListener(
                 this, illuminanceSensor, SensorManager.SENSOR_DELAY_NORMAL
             )
@@ -70,7 +76,6 @@ class SecondFragment : Fragment(), SensorEventListener {
                 var text : String = ""
                 var color : Int = Color.RED
                 progressbar.max = 100
-                binding.textView8.text = ""
 
                 var currentProgress = 0.0
                 if (resNorm == "Нет нормы"){
@@ -116,6 +121,8 @@ class SecondFragment : Fragment(), SensorEventListener {
                 binding.textView6.text = text
                 binding.luxExp.text = currentLux
                 it.isClickable = true
+                binding.buttonSecond.isClickable = true
+                binding.textView8.text = "Измерение завершено"
             },3000)
 
 
@@ -124,6 +131,12 @@ class SecondFragment : Fragment(), SensorEventListener {
         }
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         illuminanceSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
+        optionsViewModel.isNeededSecondFragment.observe(viewLifecycleOwner) {
+            if(!optionsViewModel.isNeededSecondFragment.value!!) {
+                binding.luxNorm.text = "200"
+            }
+        }
         optionsViewModel.options.observe(viewLifecycleOwner) {
             var workSubcategory: String = "з"
             val lightSystem = it[3]
@@ -262,8 +275,11 @@ class SecondFragment : Fragment(), SensorEventListener {
                 }
             }
 
-
-            binding.luxNorm.text = resNorm
+            if(optionsViewModel.isNeededSecondFragment.value!!) {
+                binding.luxNorm.text = resNorm
+            } else {
+                binding.luxNorm.text = "200"
+            }
         }
     }
 

@@ -20,8 +20,8 @@
             android:layout_height="match_parent"
             android:inputType="none"
             android:maxLines="1"
-            android:paddingTop="10dp"
             android:paddingLeft="4dp"
+            android:paddingTop="10dp"
             android:paddingRight="4dp"
             android:paddingBottom="10dp"
             android:singleLine="true"
@@ -36,8 +36,18 @@
         android:layout_height="wrap_content"
         android:text="Далее"
         android:layout_marginBottom="24dp"
+        android:layout_marginRight="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button_first_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginBottom="24dp"
+        android:text="Назад"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
@@ -100,10 +110,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="24dp"
         android:text="Выберите наименьший размер объекта различения"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

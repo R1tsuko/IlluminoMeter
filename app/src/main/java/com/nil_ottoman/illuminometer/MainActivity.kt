@@ -27,12 +27,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
 
-
-
-
     }
-
-
 
 
 }
