@@ -1,6 +1,11 @@
 package com.nil_ottoman.illuminometer
 
+import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.PorterDuff
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -11,10 +16,12 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.nil_ottoman.illuminometer.databinding.FragmentSecondBinding
+import java.lang.Math.abs
 
 class SecondFragment : Fragment(), SensorEventListener {
 
@@ -34,15 +41,20 @@ class SecondFragment : Fragment(), SensorEventListener {
     ): View? {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var resNorm: String = "Нет нормы"
+
 
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
+
 
         binding.buttonStart.setOnClickListener {
             it.isClickable = false
@@ -52,15 +64,68 @@ class SecondFragment : Fragment(), SensorEventListener {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 sensorManager.unregisterListener(this)
+
+
+                val progressbar = view.findViewById<ProgressBar>(R.id.progressBar)
+                var text : String = ""
+                var color : Int = Color.RED
+                progressbar.max = 100
+                binding.textView8.text = ""
+
+                var currentProgress = 0.0
+                if (resNorm == "Нет нормы"){
+                    color = Color.BLUE
+                    currentProgress = 100.0
+                    text = "Соответствует"
+
+                }
+                else{
+
+
+                    if(resNorm.toFloat() - currentLux.toFloat() > 100){
+                        text = "Меньше"
+                    }
+                    else if(resNorm.toFloat() - currentLux.toFloat() < -100){
+                        text = "Превышает"
+
+                    }
+                    else if(abs(resNorm.toFloat() - currentLux.toFloat()) < 100){
+                        text = "Соответствует"
+                        color = Color.BLUE
+                    }
+
+
+                    val deltaRes : Float = resNorm.toFloat() - currentLux.toFloat()
+                    println(deltaRes)
+                    currentProgress = (currentLux.toFloat()/ resNorm.toFloat()) * 50.0
+                    println(currentProgress)
+
+
+                }
+
+
+                progressbar.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+                ObjectAnimator.ofInt(progressbar,  "progress", currentProgress.toInt())
+                    .setDuration(2000)
+                    .start()
+                binding.textView6.visibility = View.VISIBLE
+
+                binding.textView6.setTextColor(color)
+
+                binding.textView6.text = text
                 binding.luxExp.text = currentLux
                 it.isClickable = true
             },3000)
+
+
+
+
         }
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         illuminanceSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
         optionsViewModel.options.observe(viewLifecycleOwner) {
             var workSubcategory: String = "з"
-            var resNorm: String = "Нет нормы"
             val lightSystem = it[3]
             when (it[1]) {
                 "backgroundDark" -> when (it[2]) {
@@ -196,6 +261,8 @@ class SecondFragment : Fragment(), SensorEventListener {
                     "Нет нормы"
                 }
             }
+
+
             binding.luxNorm.text = resNorm
         }
     }
@@ -207,6 +274,7 @@ class SecondFragment : Fragment(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent) {
         val luxes = event.values[0]
         currentLux = luxes.toString()
+
     }
 
     override fun onDestroyView() {
